@@ -1,0 +1,37 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.Tile {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  margin: 0;
+}
+
+.tile-wall {
+  background: grey;
+}
+
+.tile-space {
+  background: white;
+}
+
+.tile-goal {
+  background: #aa0000;
+}
+
+.entity-block {
+  background: #f8a409;
+}
+
+.entity-player {
+  background: blue;
+}
+
+#sokobanBoard {
+  width: 608px;
+  height: 512px;
+}
+/*# sourceMappingURL=style.css.map */

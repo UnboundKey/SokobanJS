@@ -1,0 +1,36 @@
+$tilesize :32px;
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+.Tile {
+    width: $tilesize;
+    height: $tilesize;
+    display: inline-block;
+    margin: 0;
+}
+
+.tile-wall {
+    background: grey;
+}
+
+.tile-space {
+    background: white;
+}
+.tile-goal {
+    background: #aa0000;
+}
+
+.entity-block {
+    background: #f8a409;
+}
+
+.entity-player {
+    background: blue;
+}
+
+#sokobanBoard {
+    width: $tilesize*19;
+    height: $tilesize*16;
+}
