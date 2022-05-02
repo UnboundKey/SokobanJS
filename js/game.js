@@ -10,11 +10,6 @@ document.addEventListener("keydown", (e) => {
 let gameboard = document.getElementById("sokobanBoard");
 
 
-let playerX = 0
-let playerY = 0
-
-
-
 prepareGameBoard(tileMap01)
 
 
@@ -24,7 +19,7 @@ function prepareGameBoard(selectedTileMap) {
     for(y = 0; y < selectedTileMap.height; ++y) {
         for (x = 0; x < selectedTileMap.width; ++x) {
             let currentTile = document.createElement('div')
-            currentTile.id = "x"+x+"y"+y;
+            currentTile.id = x+","+y;
             switch(selectedTileMap.mapGrid[y][x][0]) {
                 case " ":
                     currentTile.classList.add(Tiles.Space);
@@ -36,10 +31,12 @@ function prepareGameBoard(selectedTileMap) {
                     currentTile.classList.add(Tiles.Goal)
                     break;
                 case "B": 
-                    currentTile.classList.add(Entities.Block)
+                    currentTile.classList.add(Entities.Block);
+                    currentTile.classList.add(Tiles.Space);
                     break;
                 case "P":
-                    currentTile.classList.add(Entities.Character)
+                    currentTile.classList.add(Entities.Character);
+                    currentTile.classList.add(Tiles.Space);
                     break;
                     
             }
@@ -51,17 +48,29 @@ function prepareGameBoard(selectedTileMap) {
 }
 
 function handleInput(e) {
-    if(e.key == "w") {
-        console.log(e);
+    console.log(e.key);
+    if(e.key == "w" || e.key == "ArrowUp") {
+       let playerCoords = document.getElementsByClassName(Entities.Character)[0].id;
+       playerCoords = playerCoords.split(",");
+       
+       let targetTile = document.getElementById(String(playerCoords[0]) + "," + String(playerCoords[1] - 1));
+       if(targetTile.classList.contains == Entities.Block) {
+
+       }
+       console.log(playerCoords);
+       console.log(targetTileCOORds);
+       console.log(targetTile);
+
+
     }
-    if(e.key == "a") {
-        console.log(e);
+    if(e.key == "a" || e.key == "ArrowLeft") {
+
     }
-    if(e.key == "s") {
-        console.log(e);
+    if(e.key == "s" || e.key == "ArrowDown") {
+        
     }
-    if(e.key == "d") {
-        console.log(e);
+    if(e.key == "d" || e.key == "ArrowRight") {
+        
     }
 }
 
