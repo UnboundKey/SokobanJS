@@ -50,27 +50,49 @@ function prepareGameBoard(selectedTileMap) {
 function handleInput(e) {
     console.log(e.key);
     if(e.key == "w" || e.key == "ArrowUp") {
-       let playerCoords = document.getElementsByClassName(Entities.Character)[0].id;
-       playerCoords = playerCoords.split(",");
-       
-       let targetTile = document.getElementById(String(playerCoords[0]) + "," + String(playerCoords[1] - 1));
-       if(targetTile.classList.contains == Entities.Block) {
+        let playerTile = document.getElementsByClassName(Entities.Character)[0];
+       let { targetTile} = GetTile(0,-1);
 
-       }
-       console.log(playerCoords);
-       console.log(targetTileCOORds);
+       CanMove(targetTile, playerTile);
        console.log(targetTile);
-
-
+        
     }
     if(e.key == "a" || e.key == "ArrowLeft") {
-
+        let playerTile = document.getElementsByClassName(Entities.Character)[0];
+        let { targetTile} = GetTile(-1,0);
+ 
+        console.log(targetTile);
+        CanMove(targetTile, playerTile);
+        
     }
     if(e.key == "s" || e.key == "ArrowDown") {
-        
+        let playerTile = document.getElementsByClassName(Entities.Character)[0];
+        let { targetTile} = GetTile(0,+1);
+ 
+        console.log(targetTile);
+        CanMove(targetTile, playerTile);
     }
     if(e.key == "d" || e.key == "ArrowRight") {
-        
+        let playerTile = document.getElementsByClassName(Entities.Character)[0];
+        let { targetTile} = GetTile(+1,0);
+ 
+        console.log(targetTile);
+        CanMove(targetTile, playerTile);
     }
+}
+
+function CanMove(targetTile, playerTile) {
+    if (!targetTile.classList.contains(Tiles.Wall)) {
+        playerTile.classList.remove(Entities.Character);
+        targetTile.classList.add(Entities.Character);
+    }
+}
+
+function GetTile(PlayerRelativeX, PlayerRelativeY) {
+    let playerCoords = document.getElementsByClassName(Entities.Character)[0].id;
+    playerCoords = playerCoords.split(",");
+    let targetCoords = Number(playerCoords[0])+ PlayerRelativeX + "," + String(Number(playerCoords[1])+ PlayerRelativeY);
+    let targetTile = document.getElementById(targetCoords);
+    return { targetTile};
 }
 

@@ -4,8 +4,8 @@ body {
 }
 
 .Tile {
-  width: 64px;
-  height: 64px;
+  width: 32px;
+  height: 32px;
   display: inline-block;
   margin: 0;
 }
@@ -31,7 +31,7 @@ body {
 }
 
 #sokobanBoard {
-  width: 1216px;
-  height: 1024px;
+  width: 608px;
+  height: 512px;
 }
 /*# sourceMappingURL=style.css.map */
