@@ -30,6 +30,10 @@ body {
   background: blue;
 }
 
+.entity-block-goal {
+  background: #000;
+}
+
 #sokobanBoard {
   width: 608px;
   height: 512px;

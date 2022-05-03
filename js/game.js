@@ -1,12 +1,12 @@
-// TODO: Handle Player Movement
-// TODO: Handle Collition
-// TODO: Handle Box Movement
+// TODO: Handle Player Movement[~]
+// TODO: Handle Collition [~]
+// TODO: Handle Box Movement [X]
 
 document.addEventListener("keydown", (e) => {
     e.preventDefault();
     handleInput(e)
+    CheckWin()
 })
-
 let gameboard = document.getElementById("sokobanBoard");
 
 
@@ -29,6 +29,7 @@ function prepareGameBoard(selectedTileMap) {
                     break;
                 case "G":
                     currentTile.classList.add(Tiles.Goal)
+                    currentTile.classList.add(Tiles.Space);
                     break;
                 case "B": 
                     currentTile.classList.add(Entities.Block);
@@ -52,44 +53,80 @@ function handleInput(e) {
     if(e.key == "w" || e.key == "ArrowUp") {
         let playerTile = document.getElementsByClassName(Entities.Character)[0];
        let targetTile = GetTile(0,-1);
-       
+
+       //If there is a block in the way of the player, try to move it, if there is room
         if(targetTile.classList.contains(Entities.Block)) {
             console.log("Block Found");
             let blockDestination = GetTile(0,-2);
-            if (blockDestination.classList.contains(Tiles.Space)) {
+            if (blockDestination.classList.contains(Tiles.Space) && !blockDestination.classList.contains(Entities.Block)) {
                 Move(blockDestination, targetTile, Entities.Block)
+                Move(targetTile, playerTile, Entities.Character)
             }
+        } else {
+            PlayerMove(targetTile, playerTile);
         }
 
-       CanMove(targetTile, playerTile);
        console.log(targetTile);
                
     }
     if(e.key == "a" || e.key == "ArrowLeft") {
         let playerTile = document.getElementsByClassName(Entities.Character)[0];
         let targetTile = GetTile(-1,0);
- 
-        console.log(targetTile);
-        CanMove(targetTile, playerTile);
-        
+
+        //If there is a block in the way of the player, try to move it, if there is room
+       if(targetTile.classList.contains(Entities.Block)) {
+        console.log("Block Found");
+        let blockDestination = GetTile(-2,0);
+        if (blockDestination.classList.contains(Tiles.Space) && !blockDestination.classList.contains(Entities.Block)) {
+            Move(blockDestination, targetTile, Entities.Block)
+            Move(targetTile, playerTile, Entities.Character)
+        }
+    } else {
+        PlayerMove(targetTile, playerTile);
+    }
+       
+   
     }
     if(e.key == "s" || e.key == "ArrowDown") {
         let playerTile = document.getElementsByClassName(Entities.Character)[0];
         let targetTile = GetTile(0,+1);
  
-        console.log(targetTile);
-        CanMove(targetTile, playerTile);
+        //If there is a block in the way of the player, try to move it, if there is room
+       if(targetTile.classList.contains(Entities.Block)) {
+        console.log("Block Found");
+        let blockDestination = GetTile(0,+2);
+        if (blockDestination.classList.contains(Tiles.Space) && !blockDestination.classList.contains(Entities.Block)) {
+            Move(blockDestination, targetTile, Entities.Block)
+            Move(targetTile, playerTile, Entities.Character)
+        }
+    } else {
+        PlayerMove(targetTile, playerTile);
+    }
+        // console.log(targetTile);
+        // PlayerMove(targetTile, playerTile);
     }
     if(e.key == "d" || e.key == "ArrowRight") {
         let playerTile = document.getElementsByClassName(Entities.Character)[0];
         let targetTile = GetTile(+1,0);
+
+        //If there is a block in the way of the player, try to move it, if there is room
+       if(targetTile.classList.contains(Entities.Block)) {
+        console.log("Block Found");
+        let blockDestination = GetTile(+2,0);
+        if (blockDestination.classList.contains(Tiles.Space) && !blockDestination.classList.contains(Entities.Block)) {
+            Move(blockDestination, targetTile, Entities.Block)
+            Move(targetTile, playerTile, Entities.Character)
+        }
+    } else {
+        PlayerMove(targetTile, playerTile);
+    }
  
         console.log(targetTile);
-        CanMove(targetTile, playerTile);
+        PlayerMove(targetTile, playerTile);
     }
 }
 
-function CanMove(targetTile, playerTile) {
+function PlayerMove(targetTile, playerTile) {
     if (!targetTile.classList.contains(Tiles.Wall)) {
         playerTile.classList.remove(Entities.Character);
         targetTile.classList.add(Entities.Character);
@@ -97,7 +134,7 @@ function CanMove(targetTile, playerTile) {
 }
 
 function Move(DestinationTile, TileToMove, TileClass) {
-    if (!DestinationTile.classList.contains(Tiles.Wall)) {
+    if (DestinationTile.classList.contains(Tiles.Space)) {
         TileToMove.classList.remove(TileClass);
         DestinationTile.classList.add(TileClass);
     }
@@ -110,4 +147,18 @@ function GetTile(PlayerRelativeX, PlayerRelativeY) {
     let targetTile = document.getElementById(targetCoords);
     return targetTile;
 }
-
+function CheckWin() {
+    let goalTiles = document.getElementsByClassName(Tiles.Goal)
+    for(i = 0; i < goalTiles.length; i ++) {
+        if (goalTiles[i].classList.contains(Entities.Block)) {
+            goalTiles[i].classList.add(Entities.BlockDone);
+        } else {
+            goalTiles[i].classList.remove(Entities.BlockDone)
+        }
+    }
+    let blockDoneTiles = document.getElementsByClassName(Entities.BlockDone)
+    if( blockDoneTiles.length == goalTiles.length) {
+        alert("You Just beat the first Level");
+        document.removeEventListener("keydown");
+    }
+}
