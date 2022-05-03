@@ -51,15 +51,23 @@ function handleInput(e) {
     console.log(e.key);
     if(e.key == "w" || e.key == "ArrowUp") {
         let playerTile = document.getElementsByClassName(Entities.Character)[0];
-       let { targetTile} = GetTile(0,-1);
+       let targetTile = GetTile(0,-1);
+       
+        if(targetTile.classList.contains(Entities.Block)) {
+            console.log("Block Found");
+            let blockDestination = GetTile(0,-2);
+            if (blockDestination.classList.contains(Tiles.Space)) {
+                Move(blockDestination, targetTile, Entities.Block)
+            }
+        }
 
        CanMove(targetTile, playerTile);
        console.log(targetTile);
-        
+               
     }
     if(e.key == "a" || e.key == "ArrowLeft") {
         let playerTile = document.getElementsByClassName(Entities.Character)[0];
-        let { targetTile} = GetTile(-1,0);
+        let targetTile = GetTile(-1,0);
  
         console.log(targetTile);
         CanMove(targetTile, playerTile);
@@ -67,14 +75,14 @@ function handleInput(e) {
     }
     if(e.key == "s" || e.key == "ArrowDown") {
         let playerTile = document.getElementsByClassName(Entities.Character)[0];
-        let { targetTile} = GetTile(0,+1);
+        let targetTile = GetTile(0,+1);
  
         console.log(targetTile);
         CanMove(targetTile, playerTile);
     }
     if(e.key == "d" || e.key == "ArrowRight") {
         let playerTile = document.getElementsByClassName(Entities.Character)[0];
-        let { targetTile} = GetTile(+1,0);
+        let targetTile = GetTile(+1,0);
  
         console.log(targetTile);
         CanMove(targetTile, playerTile);
@@ -88,11 +96,18 @@ function CanMove(targetTile, playerTile) {
     }
 }
 
+function Move(DestinationTile, TileToMove, TileClass) {
+    if (!DestinationTile.classList.contains(Tiles.Wall)) {
+        TileToMove.classList.remove(TileClass);
+        DestinationTile.classList.add(TileClass);
+    }
+}
+
 function GetTile(PlayerRelativeX, PlayerRelativeY) {
     let playerCoords = document.getElementsByClassName(Entities.Character)[0].id;
     playerCoords = playerCoords.split(",");
     let targetCoords = Number(playerCoords[0])+ PlayerRelativeX + "," + String(Number(playerCoords[1])+ PlayerRelativeY);
     let targetTile = document.getElementById(targetCoords);
-    return { targetTile};
+    return targetTile;
 }
 
