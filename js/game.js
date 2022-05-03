@@ -132,7 +132,7 @@ function handleInput(e) {
 }
 
 function PlayerMove(targetTile, playerTile) {
-    if (!targetTile.classList.contains(Tiles.Wall)) {
+    if (!targetTile.classList.contains(Tiles.Wall) && !targetTile.classList.contains(Entities.Block)) {
         playerTile.classList.remove(Entities.Character);
         targetTile.classList.add(Entities.Character);
     }
