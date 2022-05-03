@@ -2,11 +2,16 @@
 // TODO: Handle Collition [~]
 // TODO: Handle Box Movement [X]
 
-document.addEventListener("keydown", (e) => {
+function gameloop(e) {
     e.preventDefault();
     handleInput(e)
     CheckWin()
-})
+}
+
+document.addEventListener("keydown", gameloop)
+
+
+
 let gameboard = document.getElementById("sokobanBoard");
 
 
@@ -158,7 +163,7 @@ function CheckWin() {
     }
     let blockDoneTiles = document.getElementsByClassName(Entities.BlockDone)
     if( blockDoneTiles.length == goalTiles.length) {
-        alert("You Just beat the first Level");
-        document.removeEventListener("keydown");
+        // alert("You Just beat the first Level");
+        document.removeEventListener("keydown", gameloop);
     }
 }
